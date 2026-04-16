@@ -45,7 +45,7 @@ const Footer = () => {
                             </h3>
                             <div className="flex items-center gap-3">
                                 <a
-                                    href="#"
+                                    href="https://github.com/gajendraDeveloper"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="p-2 rounded-md hover:bg-background transition text-muted-foreground hover:text-foreground"
@@ -63,7 +63,7 @@ const Footer = () => {
                                     <FaLinkedin size={18} />
                                 </a>
                                 <a
-                                    href="#"
+                                    href="mailto:gajendrasrathore20@gmail.com?subject=Hello&body=I want to connect with you"
                                     className="p-2 rounded-md hover:bg-background transition text-muted-foreground hover:text-foreground"
                                 >
                                     <Mail size={18} />
@@ -82,7 +82,7 @@ const Footer = () => {
                     </p>
 
                     <p className="text-xs text-secondary text-center sm:text-right">
-                        Built with <span className="animate-pulse">❤️</span> using Next.js + AI
+                        Built with <span className="animate-pulse">❤️</span> by Gajendra Rathore.
                     </p>
 
                 </div>
