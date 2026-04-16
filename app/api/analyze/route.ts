@@ -54,7 +54,7 @@ ${jobDesc}
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
-                temperature: 0.2, // Low temperature for more deterministic analysis
+                temperature: 0, // Set to 0 for completely deterministic analysis
             }
         });
 
