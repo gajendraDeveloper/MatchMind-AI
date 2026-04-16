@@ -31,7 +31,7 @@ export default function ResultPage() {
                     <ArrowLeft size={20} /> Back to Scanner
                 </button>
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground flex-1 sm:text-right">
-                    Your Assessment Report
+                    AI-Powered Career Report
                 </h1>
             </div>
             <ResultPanel result={result} />
