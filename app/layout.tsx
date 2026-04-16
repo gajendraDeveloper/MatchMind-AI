@@ -17,6 +17,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "MatchMind AI - Resume Scanner",
+   icons: {
+    icon: "/favicon.png",
+  },
   description: "AI-powered resume scanner and optimizer",
 };
 
