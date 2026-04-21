@@ -9,6 +9,8 @@ import RadarSkillChart from"./charts/RadarSkillChart";
 import ExperienceChart from"./charts/ExperienceChart";
 import { Download } from"lucide-react";
 import toast from"react-hot-toast";
+import InterviewQuestions from "./InterviewQuestions";
+
 
 type Props = {
  result: any;
@@ -131,7 +133,11 @@ const ResultPanel = ({ result }: Props) => {
                         </ul>
                     </div>
                 )}
+
+                {/* Interview Questions */}
+                <InterviewQuestions questions={result.interview_questions} />
             </div>
+
  </div>
  );
 };

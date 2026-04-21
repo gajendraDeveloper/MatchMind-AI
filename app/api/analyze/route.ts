@@ -39,7 +39,8 @@ You must return your analysis strictly as a JSON object with the following schem
     { "year": "<string, e.g., '2021'>", "value": <number 1-10> }
     // generate a brief chronological timeline based on the resume
   ],
-  "summary": "<string, a 2-3 sentence summary of the candidate's fit for the role>"
+  "summary": "<string, a 2-3 sentence summary of the candidate's fit for the role>",
+  "interview_questions": [<array of strings, 10-15 interview questions based on the job description and resume to help the candidate prepare>]
 }
 
 RESUME:
@@ -49,14 +50,32 @@ JOB DESCRIPTION:
 ${jobDesc}
 `;
 
-        const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash",
-            contents: prompt,
-            config: {
-                responseMimeType: "application/json",
-                temperature: 0, // Set to 0 for completely deterministic analysis
+        // Helper for retry logic
+        const fetchGenerate = async (retries = 3, backoff = 1000) => {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    return await ai.models.generateContent({
+                        model: "gemini-2.5-flash-lite", // Using lite version for better availability
+                        contents: prompt,
+                        config: {
+                            responseMimeType: "application/json",
+                            temperature: 0,
+                        }
+                    });
+                } catch (error: any) {
+                    const isBusy = error.status === 503 || error.message?.includes("high demand") || error.status === 429;
+                    if (isBusy && i < retries - 1) {
+                        await new Promise(resolve => setTimeout(resolve, backoff * Math.pow(2, i)));
+                        continue;
+                    }
+                    throw error;
+                }
             }
-        });
+            throw new Error("Failed to reach Gemini after retries");
+        };
+
+        const response = await fetchGenerate();
+        if (!response) throw new Error("No response from Gemini");
 
         const dataStr = response.text;
         if (!dataStr) {
@@ -67,10 +86,18 @@ ${jobDesc}
         return NextResponse.json(jsonAnalysis);
 
     } catch (error: any) {
-        console.error("Analysis API Error:", error);
+        let errorMessage = error.message || "Failed to analyze resume";
+        try {
+            // If the error message is a JSON string (common with Gemini SDK), parse it for a cleaner response
+            const parsed = JSON.parse(errorMessage);
+            if (parsed.error?.message) errorMessage = parsed.error.message;
+        } catch (e) {
+            // Not a JSON string, keep original
+        }
+
         return NextResponse.json(
-            { error: error.message || "Failed to analyze resume" },
-            { status: 500 }
+            { error: errorMessage },
+            { status: error.status || 500 }
         );
     }
 }

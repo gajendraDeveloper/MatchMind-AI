@@ -8,7 +8,7 @@ import FileUpload from "./FileUpload";
 import JobDescriptionBox from "./JobDescriptionBox";
 import AnalyzeButton from "./AnalyzeButton";
 import { useRouter } from "next/navigation";
-import { Target, FileSearch, Lightbulb } from "lucide-react";
+import { Target, FileSearch, Lightbulb, MessageSquareText } from "lucide-react";
 import ScoreChart from "./charts/ScoreChart";
 import SkillsPieChart from "./charts/SkillsPieChart";
 import ExperienceChart from "./charts/ExperienceChart";
@@ -24,6 +24,12 @@ const dummyResult = {
         { year: "2021", value: 6 },
         { year: "2022", value: 8 },
         { year: "2023", value: 9 },
+    ],
+    interview_questions: [
+        "What experience do you have with Next.js app router?",
+        "How do you handle state management in large scale React applications?",
+        "Can you explain your process for optimizing web performance?",
+        "Describe a challenging bug you solved recently."
     ]
 };
 
@@ -128,7 +134,8 @@ const ResumeAnalyzer = () => {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
                     {/* Feature 1 */}
                     <div className="bg-card p-8 rounded-3xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                         <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-ternary mb-6 font-bold shadow-inner border border-secondary/20">
@@ -161,7 +168,19 @@ const ResumeAnalyzer = () => {
                             Receive highly tailored, step-by-step advice on how to tweak your bullet points and impact statements.
                         </p>
                     </div>
+
+                    {/* Feature 4 */}
+                    <div className="bg-card p-8 rounded-3xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                        <div className="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-ternary mb-6 font-bold shadow-inner border border-secondary/20">
+                            <MessageSquareText size={28} />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground mb-3">Interview Prep</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                            Get a list of 10-15 custom-tailored interview questions based on the job requirements to help you prepare.
+                        </p>
+                    </div>
                 </div>
+
 
                 {/* Dummy Charts Preview Section */}
                 <div className="mt-20 relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10 shadow-sm">
